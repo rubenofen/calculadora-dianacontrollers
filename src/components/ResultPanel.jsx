@@ -47,9 +47,6 @@ export default function ResultPanel({ result, business, onEditBusiness }) {
         <p className="mt-1 text-sm text-white/85">
           {money(r.precioRecomendado)} sin IVA · IVA {money(r.ivaEur)}
         </p>
-        {r.participantes > 1 && (
-          <p className="mt-2 text-sm text-white/85">{money(r.precioPorUnidad)} por participante / unidad</p>
-        )}
       </div>
 
       {/* Desglose del cálculo */}

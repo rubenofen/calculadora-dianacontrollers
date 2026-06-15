@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import Field from './Field.jsx'
+import CollaboratorsField from './CollaboratorsField.jsx'
 
 // Sección colapsable de campos.
-export default function Section({ section, values, onChange }) {
+export default function Section({ section, values, onChange, currency }) {
   const [open, setOpen] = useState(true)
 
   return (
@@ -21,7 +22,13 @@ export default function Section({ section, values, onChange }) {
           {section.help ? <p className="pt-3 text-xs text-gris-medio">{section.help}</p> : null}
           <div className="grid grid-cols-1 gap-x-6 sm:grid-cols-2">
             {section.fields.map((f) => (
-              <Field key={f.id} field={f} value={values[f.id]} onChange={onChange} />
+              <div key={f.id} className={f.full ? 'sm:col-span-2' : ''}>
+                {f.kind === 'collaborators' ? (
+                  <CollaboratorsField field={f} value={values[f.id]} onChange={onChange} currency={currency} />
+                ) : (
+                  <Field field={f} value={values[f.id]} onChange={onChange} />
+                )}
+              </div>
             ))}
           </div>
         </div>

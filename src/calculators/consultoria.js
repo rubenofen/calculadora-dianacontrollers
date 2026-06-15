@@ -15,16 +15,7 @@ export const sections = [
     fields: [
       { id: 'horasPropias', label: 'Horas de trabajo propias', default: 10, unit: 'h' },
       { id: 'tarifaPropia', label: 'Tarifa hora propia (referencia)', default: 50, unit: '€/h' },
-      { id: 'colabHoras1', label: 'Colaborador 1 — horas', default: 0, unit: 'h' },
-      { id: 'colabTarifa1', label: 'Colaborador 1 — tarifa/hora', default: 0, unit: '€/h' },
-      { id: 'colabHoras2', label: 'Colaborador 2 — horas', default: 0, unit: 'h' },
-      { id: 'colabTarifa2', label: 'Colaborador 2 — tarifa/hora', default: 0, unit: '€/h' },
-      { id: 'colabHoras3', label: 'Colaborador 3 — horas', default: 0, unit: 'h' },
-      { id: 'colabTarifa3', label: 'Colaborador 3 — tarifa/hora', default: 0, unit: '€/h' },
-      { id: 'colabHoras4', label: 'Colaborador 4 — horas', default: 0, unit: 'h' },
-      { id: 'colabTarifa4', label: 'Colaborador 4 — tarifa/hora', default: 0, unit: '€/h' },
-      { id: 'colabHoras5', label: 'Colaborador 5 — horas', default: 0, unit: 'h' },
-      { id: 'colabTarifa5', label: 'Colaborador 5 — tarifa/hora', default: 0, unit: '€/h' },
+      { id: 'colaboradores', kind: 'collaborators', full: true, default: [], label: 'Colaboradores / proveedores externos' },
       { id: 'herramientas', label: 'Herramientas y software', default: 0, unit: '€' },
       { id: 'materiales', label: 'Materiales / entregables', default: 0, unit: '€' },
       { id: 'desplazamientos', label: 'Desplazamientos y dietas', default: 0, unit: '€' },
@@ -113,21 +104,20 @@ export const sections = [
       { id: 'incertidumbre', label: 'Incertidumbre del proyecto', default: 3, kind: 'score' },
     ],
   },
-  {
-    id: 'I',
-    title: 'I · Formato de prestación',
-    fields: [
-      { id: 'formato', label: 'Formato', default: 3, kind: 'score', min: 1, max: 5, scaleLabels: ['Hora', 'Sesión', 'Proyecto', 'Retainer', 'Grupal'] },
-      { id: 'participantes', label: 'Nº de participantes / unidades', default: 1, unit: 'uds' },
-    ],
-  },
 ]
 
 // Defaults derivados de la config (para inicializar el estado del formulario).
 export function defaultValues() {
   const out = {}
-  for (const s of sections) for (const f of s.fields) out[f.id] = f.default
+  for (const s of sections) for (const f of s.fields) {
+    out[f.id] = Array.isArray(f.default) ? [...f.default] : f.default
+  }
   return out
+}
+
+// Crea un colaborador vacío.
+export function emptyCollaborator() {
+  return { nombre: '', horas: '', tarifa: '' }
 }
 
 const avg = (arr) => (arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : 0)
@@ -137,18 +127,17 @@ const avg = (arr) => (arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length :
 // =============================================================================
 export function compute(raw, global) {
   const v = {}
-  for (const s of sections) for (const f of s.fields) v[f.id] = num(raw[f.id], 0)
+  for (const s of sections) for (const f of s.fields) {
+    if (f.kind === 'collaborators') continue // se procesa como array aparte
+    v[f.id] = num(raw[f.id], 0)
+  }
 
   const ivaPct = num(global?.ivaPct, 21) / 100 // E108
 
   // A · Costes directos
   const subtotalPropio = v.horasPropias * v.tarifaPropia // E8
-  const subtotalColab =
-    v.colabHoras1 * v.colabTarifa1 +
-    v.colabHoras2 * v.colabTarifa2 +
-    v.colabHoras3 * v.colabTarifa3 +
-    v.colabHoras4 * v.colabTarifa4 +
-    v.colabHoras5 * v.colabTarifa5 // E25
+  const colaboradores = Array.isArray(raw.colaboradores) ? raw.colaboradores : []
+  const subtotalColab = colaboradores.reduce((acc, c) => acc + num(c.horas, 0) * num(c.tarifa, 0), 0) // E25
   const otrosDirectos = v.herramientas + v.materiales + v.desplazamientos + v.informes + v.softwareBI
   const totalDirectos = subtotalPropio + subtotalColab + otrosDirectos // E32
 
@@ -195,7 +184,6 @@ export function compute(raw, global) {
   const precioRecomendado = paso3 + primaRiesgoEur // E107 (sin IVA)
   const ivaEur = precioRecomendado * ivaPct // E109
   const precioFinal = precioRecomendado + ivaEur // E110 (con IVA)
-  const precioPorUnidad = v.participantes > 1 ? precioFinal / v.participantes : precioFinal // E112
   const denomMin = 1 - margenMinimo - reserva
   const precioMinimo = denomMin === 0 ? 0 : (costeBase / denomMin) * (1 + ivaPct) // E113
 
@@ -229,8 +217,6 @@ export function compute(raw, global) {
     precioRecomendado,
     ivaEur,
     precioFinal,
-    precioPorUnidad,
-    participantes: v.participantes,
     precioMinimo,
     // análisis
     rentabilidadBruta,

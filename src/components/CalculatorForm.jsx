@@ -58,7 +58,7 @@ export default function CalculatorForm({
         {/* Formulario */}
         <div className="flex flex-col gap-4">
           {calculator.sections.map((s) => (
-            <Section key={s.id} section={s} values={values} onChange={onChange} />
+            <Section key={s.id} section={s} values={values} onChange={onChange} currency={business.currency} />
           ))}
         </div>
 
