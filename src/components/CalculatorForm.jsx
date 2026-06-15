@@ -64,7 +64,7 @@ export default function CalculatorForm({
 
         {/* Resultado fijo */}
         <div className="lg:sticky lg:top-6 lg:h-fit">
-          <ResultPanel result={result} business={business} onEditBusiness={onEditBusiness} />
+          <ResultPanel result={result} business={business} calculator={calculator} onEditBusiness={onEditBusiness} />
         </div>
       </div>
     </div>

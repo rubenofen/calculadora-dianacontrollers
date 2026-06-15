@@ -1,8 +1,9 @@
 import { formatCurrency, formatPercent } from '../lib/format.js'
 import { formatDate } from '../config/global.js'
+import { exportResultPdf } from '../lib/pdf.js'
 
 // Panel de resultado fijo. Recalcula en vivo con cada cambio del formulario.
-export default function ResultPanel({ result, business, onEditBusiness }) {
+export default function ResultPanel({ result, business, calculator, onEditBusiness }) {
   const r = result
   const cur = business?.currency || 'EUR'
   const money = (v) => formatCurrency(v, cur)
@@ -48,6 +49,19 @@ export default function ResultPanel({ result, business, onEditBusiness }) {
           {money(r.precioRecomendado)} sin IVA · IVA {money(r.ivaEur)}
         </p>
       </div>
+
+      {/* Descargar informe en PDF */}
+      <button
+        type="button"
+        onClick={() => exportResultPdf(result, business, calculator)}
+        className="flex items-center justify-center gap-2 rounded-xl border border-gris-claro bg-white px-4 py-2.5 text-sm font-semibold text-marino shadow-sm transition hover:bg-gris-claro/40"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4">
+          <path d="M10 1.5a.75.75 0 0 1 .75.75v8.69l2.22-2.22a.75.75 0 1 1 1.06 1.06l-3.5 3.5a.75.75 0 0 1-1.06 0l-3.5-3.5a.75.75 0 1 1 1.06-1.06l2.22 2.22V2.25A.75.75 0 0 1 10 1.5Z" />
+          <path d="M3.5 13a.75.75 0 0 1 .75.75v2.5c0 .14.11.25.25.25h11a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 15.5 18h-11A1.75 1.75 0 0 1 2.75 16.25v-2.5A.75.75 0 0 1 3.5 13Z" />
+        </svg>
+        Descargar informe en PDF
+      </button>
 
       {/* Desglose del cálculo */}
       <div className="rounded-xl border border-gris-claro bg-white p-5 shadow-sm">

@@ -11,6 +11,7 @@ El fichero [`docs/Calculadora_Precios servicios-productos.xlsx`](docs/Calculador
 1. La app pregunta primero **qué tipo de servicio/producto** se va a calcular (una pestaña del Excel = una calculadora).
 2. Muestra un **formulario interactivo** con todos los campos opcionales.
 3. Un **panel de resultado fijo** recalcula el precio en vivo a medida que se rellenan los datos.
+4. Un botón **"Descargar informe en PDF"** genera un informe completo del cálculo (datos del negocio, precio final, desglose, costes y análisis de rentabilidad).
 
 Fórmula de servicios: `Precio = (Coste Base ÷ (1−Margen)) × Factor Valor × Factor Posicionamiento + Prima Riesgo + IVA`.
 
@@ -35,6 +36,10 @@ Para añadir una calculadora nueva: crear su módulo siguiendo `consultoria.js`,
 
 La configuración global (IVA, moneda) está en `src/config/global.js` (pestaña 🏠 Portada del Excel).
 
+### Exportación a PDF
+
+`src/lib/pdf.js` exporta `exportResultPdf(result, business, calculator)`, que construye el informe con **jsPDF** a partir de los datos estructurados (no es una captura: el texto es seleccionable y usa la paleta de marca). jsPDF se carga de forma **diferida** (`import()` dinámico dentro de la función) para no engordar el bundle inicial; solo se descarga al pulsar el botón. El botón vive en `ResultPanel.jsx`.
+
 ## Desarrollo
 
 Gestor de paquetes: **pnpm**.
@@ -49,3 +54,6 @@ pnpm preview  # previsualizar el build
 > Nota: pnpm 10+ bloquea por defecto los scripts de build de dependencias. Los
 > necesarios (`esbuild`, `@tailwindcss/oxide`) están autorizados en
 > `pnpm-workspace.yaml`.
+
+> Tras añadir `jspdf` a `package.json`, ejecuta `pnpm install` para que pnpm
+> enlace la dependencia y actualice `pnpm-lock.yaml`.
