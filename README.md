@@ -40,6 +40,19 @@ La configuración global (IVA, moneda) está en `src/config/global.js` (pestaña
 
 `src/lib/pdf.js` exporta `exportResultPdf(result, business, calculator)`, que construye el informe con **jsPDF** a partir de los datos estructurados (no es una captura: el texto es seleccionable y usa la paleta de marca). jsPDF se carga de forma **diferida** (`import()` dinámico dentro de la función) para no engordar el bundle inicial; solo se descarga al pulsar el botón. El botón vive en `ResultPanel.jsx`.
 
+## Acceso (protección por contraseña)
+
+La app está protegida con **HTTP Basic Auth multiusuario** mediante un Routing Middleware de Vercel (`middleware.js` en la raíz). El navegador pide usuario/contraseña antes de cargar nada y las credenciales se validan en el edge, **no viajan en el bundle**.
+
+Los usuarios se configuran en una única variable de entorno en Vercel (Project → Settings → Environment Variables):
+
+- `BASIC_AUTH_USERS` — pares `usuario:contraseña` separados por coma.
+  Ejemplo: `ruben:clave1,diana:clave2,maria:clave3`
+
+Para dar de alta o baja un usuario basta con editar esa variable y volver a desplegar; no hay que tocar código. Si la variable no está definida, el middleware **no bloquea** (evita dejar la app inaccesible por error). Para probar en local con `vercel dev`, copia `.env.example` a `.env`.
+
+> Nota: esto protege a nivel de servidor y permite varios usuarios, pero es una **lista de credenciales compartida que administras a mano** (sin registro, reset de contraseña, roles ni sesiones individuales). La contraseña no puede contener comas. Para gestión de cuentas real haría falta un backend de auth (Supabase, Auth0, Clerk…).
+
 ## Desarrollo
 
 Gestor de paquetes: **pnpm**.
