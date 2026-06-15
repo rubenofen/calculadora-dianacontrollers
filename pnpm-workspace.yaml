@@ -1,0 +1,5 @@
+# Configuración de pnpm. Autoriza los scripts de build necesarios para que
+# Vite/Tailwind funcionen (pnpm 10+ los bloquea por defecto).
+allowBuilds:
+  esbuild: true
+  '@tailwindcss/oxide': true
