@@ -1,1 +1,20 @@
 @import "tailwindcss";
+
+/* Paleta de marca (ver imagen de referencia).
+   Primarios por orden de importancia: terracota > naranja > salvia.
+   Neutros para fondos y texto. */
+@theme {
+  /* Neutros */
+  --color-blanco: #f7f4ef;
+  --color-gris-claro: #d4d2cd;
+  --color-gris-medio: #5f6772;
+  --color-marino: #16293a;
+
+  /* Primarios */
+  --color-terracota: #bc5a2c;
+  --color-terracota-dark: #a44d24;
+  --color-naranja: #e6a04a;
+  --color-naranja-dark: #d68f37;
+  --color-salvia: #93ae88;
+  --color-salvia-dark: #6f8c63;
+}

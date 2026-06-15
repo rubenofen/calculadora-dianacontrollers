@@ -1,43 +1,56 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import Section from './Section.jsx'
 import ResultPanel from './ResultPanel.jsx'
-import { GLOBAL } from '../config/global.js'
 
 // Formulario interactivo de una calculadora + panel de resultado en vivo.
-export default function CalculatorForm({ calculator, onBack }) {
-  const [values, setValues] = useState(() => calculator.defaultValues())
+export default function CalculatorForm({
+  calculator,
+  business,
+  values,
+  onValuesChange,
+  onBack,
+  onEditBusiness,
+}) {
+  const onChange = (id, value) => onValuesChange({ ...values, [id]: value })
+  const reset = () => onValuesChange(calculator.defaultValues())
 
-  const onChange = (id, value) => setValues((prev) => ({ ...prev, [id]: value }))
-  const reset = () => setValues(calculator.defaultValues())
-
-  // Recalcula en cada render (los inputs son la única fuente de estado).
-  const result = useMemo(() => calculator.compute(values, GLOBAL), [calculator, values])
+  // Recalcula en cada render. El IVA del negocio entra en el cálculo.
+  const result = useMemo(() => calculator.compute(values, business), [calculator, values, business])
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
           <button
             type="button"
             onClick={onBack}
-            className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100"
+            className="rounded-lg border border-gris-claro px-3 py-1.5 text-sm text-gris-medio hover:bg-gris-claro/40"
           >
             ← Cambiar tipo
           </button>
-          <h1 className="text-xl font-bold text-slate-900">
-            {calculator.icon} {calculator.label}
-          </h1>
+          <div>
+            <h1 className="text-xl font-bold text-marino">
+              {calculator.icon} {calculator.label}
+            </h1>
+            {(business.negocio || business.sector) && (
+              <p className="text-sm text-gris-medio">
+                {business.negocio}
+                {business.negocio && business.sector ? ' · ' : ''}
+                {business.sector}
+              </p>
+            )}
+          </div>
         </div>
         <button
           type="button"
           onClick={reset}
-          className="rounded-lg px-3 py-1.5 text-sm text-slate-500 hover:bg-slate-100"
+          className="rounded-lg px-3 py-1.5 text-sm text-gris-medio hover:bg-gris-claro/40"
         >
           Restablecer valores
         </button>
       </div>
 
-      <p className="mb-6 rounded-lg bg-slate-100 px-4 py-2 text-xs text-slate-500">
+      <p className="mb-6 rounded-lg bg-gris-claro/40 px-4 py-2 text-xs text-gris-medio">
         Todos los campos son opcionales. {calculator.formula}
       </p>
 
@@ -51,7 +64,7 @@ export default function CalculatorForm({ calculator, onBack }) {
 
         {/* Resultado fijo */}
         <div className="lg:sticky lg:top-6 lg:h-fit">
-          <ResultPanel result={result} />
+          <ResultPanel result={result} business={business} onEditBusiness={onEditBusiness} />
         </div>
       </div>
     </div>

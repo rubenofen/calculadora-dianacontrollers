@@ -1,10 +1,10 @@
-import { CURRENCY_LOCALE, GLOBAL } from '../config/global.js'
+import { CURRENCY_LOCALE } from '../config/global.js'
 
-export function formatCurrency(value, currency = GLOBAL.currency) {
+export function formatCurrency(value, currency = 'EUR') {
   const n = Number.isFinite(value) ? value : 0
   return new Intl.NumberFormat(CURRENCY_LOCALE, {
     style: 'currency',
-    currency,
+    currency: currency || 'EUR',
     maximumFractionDigits: 2,
   }).format(n)
 }
