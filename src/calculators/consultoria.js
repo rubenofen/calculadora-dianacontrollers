@@ -25,18 +25,9 @@ export const sections = [
   },
   {
     id: 'B',
-    title: 'B · Costes indirectos',
-    help: 'Estructura mensual prorrateada según las horas facturables del equipo (pestaña Equipo).',
+    title: 'B · Costes indirectos (imputación)',
+    help: 'La estructura mensual del negocio se configura en "Datos de tu negocio" y se prorratea según estas horas de proyecto.',
     fields: [
-      { id: 'nominas', label: 'Nóminas y personal fijo (desde Equipo)', default: 0, unit: '€/mes' },
-      { id: 'alquiler', label: 'Alquiler y suministros', default: 0, unit: '€/mes' },
-      { id: 'seguros', label: 'Seguros', default: 0, unit: '€/mes' },
-      { id: 'autonomos', label: 'Cuota autónomos / costes societarios', default: 0, unit: '€/mes' },
-      { id: 'contabilidad', label: 'Contabilidad y asesoría', default: 0, unit: '€/mes' },
-      { id: 'marketing', label: 'Marketing y publicidad', default: 0, unit: '€/mes' },
-      { id: 'formacion', label: 'Formación y desarrollo profesional', default: 0, unit: '€/mes' },
-      { id: 'herramientasGestion', label: 'Herramientas de gestión', default: 0, unit: '€/mes' },
-      { id: 'horasFacturablesTotales', label: 'Horas facturables totales/mes (desde Equipo)', default: 960, unit: 'h/mes' },
       { id: 'horasProyecto', label: 'Horas totales dedicadas a este proyecto', default: 10, unit: 'h' },
     ],
   },
@@ -67,12 +58,12 @@ export const sections = [
     title: 'E · Valor aportado al cliente',
     help: 'Del 1 (bajo) al 5 (muy alto). Ajusta el precio según el impacto generado.',
     fields: [
-      { id: 'problema', label: 'Problema crítico que resuelve', default: 3, kind: 'score' },
-      { id: 'impacto', label: 'Impacto económico generado', default: 3, kind: 'score' },
-      { id: 'ahorro', label: 'Ahorro de tiempo del cliente', default: 3, kind: 'score' },
-      { id: 'riesgoRed', label: 'Reducción de riesgos', default: 3, kind: 'score' },
-      { id: 'transformacion', label: 'Transformación / resultado obtenido', default: 3, kind: 'score' },
-      { id: 'especializacion', label: 'Nivel de especialización requerido', default: 3, kind: 'score' },
+      { id: 'problema', label: 'Problema crítico que resuelve', default: 1, kind: 'score' },
+      { id: 'impacto', label: 'Impacto económico generado', default: 1, kind: 'score' },
+      { id: 'ahorro', label: 'Ahorro de tiempo del cliente', default: 1, kind: 'score' },
+      { id: 'riesgoRed', label: 'Reducción de riesgos', default: 1, kind: 'score' },
+      { id: 'transformacion', label: 'Transformación / resultado obtenido', default: 1, kind: 'score' },
+      { id: 'especializacion', label: 'Nivel de especialización requerido', default: 1, kind: 'score' },
     ],
   },
   {
@@ -98,10 +89,10 @@ export const sections = [
     title: 'H · Riesgo y complejidad',
     help: 'Del 1 al 5. Genera una prima de riesgo de 0% a 20%.',
     fields: [
-      { id: 'personalizacion', label: 'Grado de personalización', default: 3, kind: 'score' },
-      { id: 'responsabilidad', label: 'Responsabilidad asumida', default: 3, kind: 'score' },
-      { id: 'urgencia', label: 'Urgencia', default: 3, kind: 'score' },
-      { id: 'incertidumbre', label: 'Incertidumbre del proyecto', default: 3, kind: 'score' },
+      { id: 'personalizacion', label: 'Grado de personalización', default: 1, kind: 'score' },
+      { id: 'responsabilidad', label: 'Responsabilidad asumida', default: 1, kind: 'score' },
+      { id: 'urgencia', label: 'Urgencia', default: 1, kind: 'score' },
+      { id: 'incertidumbre', label: 'Incertidumbre del proyecto', default: 1, kind: 'score' },
     ],
   },
 ]
@@ -141,12 +132,16 @@ export function compute(raw, global) {
   const otrosDirectos = v.herramientas + v.materiales + v.desplazamientos + v.informes + v.softwareBI
   const totalDirectos = subtotalPropio + subtotalColab + otrosDirectos // E32
 
-  // B · Costes indirectos prorrateados
+  // B · Costes indirectos prorrateados.
+  // La estructura mensual vive en los datos del negocio (global); las horas de
+  // proyecto siguen siendo específicas de cada cálculo.
+  const g = (id) => num(global?.[id], 0)
   const indirectosSinNominas =
-    v.alquiler + v.seguros + v.autonomos + v.contabilidad + v.marketing + v.formacion + v.herramientasGestion // E43
-  const indirectosConNominas = indirectosSinNominas + v.nominas // E44
+    g('alquiler') + g('seguros') + g('autonomos') + g('contabilidad') + g('marketing') + g('formacion') + g('herramientasGestion') // E43
+  const indirectosConNominas = indirectosSinNominas + g('nominas') // E44
+  const horasFacturablesTotales = g('horasFacturablesTotales')
   const indirectosImputados =
-    v.horasFacturablesTotales === 0 ? 0 : (indirectosConNominas / v.horasFacturablesTotales) * v.horasProyecto // E47
+    horasFacturablesTotales === 0 ? 0 : (indirectosConNominas / horasFacturablesTotales) * v.horasProyecto // E47
 
   // C · Tiempo no facturable
   const horasNoFacturables = v.prep + v.reuniones + v.admin + v.seguimiento + v.atencion + v.procesos // E56

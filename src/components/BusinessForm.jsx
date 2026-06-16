@@ -1,4 +1,5 @@
-import { CURRENCIES } from '../config/global.js'
+import { CURRENCIES, BUSINESS_INDIRECT_FIELDS } from '../config/global.js'
+import Field from './Field.jsx'
 
 // Paso "DATOS DE TU NEGOCIO" (Portada del Excel). Se rellena tras elegir el
 // tipo y se refleja en la calculadora. Moneda e IVA alimentan el cálculo.
@@ -78,6 +79,19 @@ export default function BusinessForm({ type, business, onChange, onContinue, onB
               onChange={(e) => set('fecha', e.target.value)}
             />
           </label>
+        </div>
+
+        {/* Costes indirectos (estructura mensual) — comunes a todas las calculadoras */}
+        <div className="mt-6 border-t border-gris-claro/60 pt-4">
+          <h2 className="text-sm font-semibold text-marino">Costes indirectos (estructura mensual)</h2>
+          <p className="mt-1 text-xs text-gris-medio">
+            Gastos fijos del negocio. Se prorratean entre las horas facturables y se aplican a todas las calculadoras.
+          </p>
+          <div className="mt-1 grid grid-cols-1 gap-x-6 sm:grid-cols-2">
+            {BUSINESS_INDIRECT_FIELDS.map((f) => (
+              <Field key={f.id} field={f} value={business[f.id] ?? ''} onChange={(id, val) => set(id, val)} />
+            ))}
+          </div>
         </div>
 
         <button

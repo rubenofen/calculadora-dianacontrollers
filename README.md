@@ -35,7 +35,7 @@ Diseño *config-driven*. Cada calculadora vive en `src/calculators/<id>.js` y ex
 
 Para añadir una calculadora nueva: crear su módulo siguiendo `consultoria.js`, registrarlo en `src/calculators/index.js` y marcar `available: true` en `CALCULATOR_TYPES`.
 
-La configuración global (IVA, moneda) está en `src/config/global.js` (pestaña 🏠 Portada del Excel).
+La configuración global (IVA, moneda) está en `src/config/global.js` (pestaña 🏠 Portada del Excel). Los **costes indirectos** (estructura mensual: nóminas, alquiler, seguros, etc. y horas facturables totales/mes) también viven en los datos del negocio (`BUSINESS_INDIRECT_FIELDS`), porque son comunes a todas las calculadoras; se editan en la pantalla "Datos de tu negocio" y `compute(values, business)` los lee desde `business`. Las **horas dedicadas al proyecto** (`horasProyecto`) siguen siendo específicas de cada cálculo y se mantienen en la calculadora (sección B).
 
 ### Persistencia
 

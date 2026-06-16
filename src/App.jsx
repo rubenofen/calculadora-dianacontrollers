@@ -13,8 +13,9 @@ const valuesKey = (id) => `calc.values.${id}`
 export default function App() {
   const [stage, setStage] = useState('type') // 'type' | 'business' | 'calc'
   const [typeId, setTypeId] = useState(null)
-  // Datos del negocio: se recuperan de localStorage si existen.
-  const [business, setBusiness] = useState(() => loadJSON(BUSINESS_KEY, defaultBusiness()))
+  // Datos del negocio: se recuperan de localStorage y se fusionan con los
+  // defaults (así campos nuevos —p. ej. costes indirectos— tienen valor inicial).
+  const [business, setBusiness] = useState(() => ({ ...defaultBusiness(), ...(loadJSON(BUSINESS_KEY, null) || {}) }))
   const [values, setValues] = useState(null)
 
   const calculator = typeId ? getCalculator(typeId) : null
