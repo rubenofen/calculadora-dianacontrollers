@@ -72,7 +72,7 @@ export const sections = [
       {
         id: "horasProyecto",
         label: "Horas totales dedicadas a este proyecto",
-        default: 10,
+        default: 0,
         unit: "h",
       },
     ],
