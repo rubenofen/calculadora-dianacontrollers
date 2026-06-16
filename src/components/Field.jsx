@@ -6,11 +6,11 @@ export default function Field({ field, value, onChange }) {
   const scaleLabel = field.scaleLabels?.[Math.round(Number(value)) - min]
 
   return (
-    <label className="flex flex-col gap-1 py-2">
+    <label className="flex h-full flex-col gap-1 py-2">
       <span className="text-sm text-gris-medio">{field.label}</span>
 
       {isScore ? (
-        <div className="flex items-center gap-3">
+        <div className="mt-auto flex items-center gap-3">
           <input
             type="range"
             min={min}
@@ -26,7 +26,7 @@ export default function Field({ field, value, onChange }) {
           </span>
         </div>
       ) : (
-        <div className="flex items-stretch overflow-hidden rounded-lg border border-gris-claro focus-within:border-terracota focus-within:ring-2 focus-within:ring-terracota/20">
+        <div className="mt-auto flex items-stretch overflow-hidden rounded-lg border border-gris-claro focus-within:border-terracota focus-within:ring-2 focus-within:ring-terracota/20">
           <input
             type="number"
             inputMode="decimal"

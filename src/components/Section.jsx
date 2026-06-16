@@ -22,7 +22,7 @@ export default function Section({ section, values, onChange, currency }) {
           {section.help ? <p className="pt-3 text-xs text-gris-medio">{section.help}</p> : null}
           <div className="grid grid-cols-1 gap-x-6 sm:grid-cols-2">
             {section.fields.map((f) => (
-              <div key={f.id} className={f.full ? 'sm:col-span-2' : ''}>
+              <div key={f.id} className={f.full ? 'sm:col-span-2' : 'h-full'}>
                 {f.kind === 'collaborators' ? (
                   <CollaboratorsField field={f} value={values[f.id]} onChange={onChange} currency={currency} />
                 ) : (
