@@ -70,7 +70,7 @@ export const sections = [
     id: 'F',
     title: 'F · Posicionamiento de marca',
     fields: [
-      { id: 'posicionamiento', label: 'Posicionamiento', default: 2, kind: 'score', min: 1, max: 3, scaleLabels: ['Accesible', 'Intermedio', 'Premium'] },
+      { id: 'posicionamiento', label: 'Posicionamiento', default: 1, kind: 'score', min: 1, max: 3, scaleLabels: ['Accesible', 'Intermedio', 'Premium'] },
     ],
   },
   {
