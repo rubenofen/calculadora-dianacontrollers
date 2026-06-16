@@ -1,4 +1,4 @@
-import { num } from '../lib/format.js'
+import { num } from "../lib/format.js";
 
 // =============================================================================
 // CALCULADORA: CONSULTORÍA
@@ -9,184 +9,367 @@ import { num } from '../lib/format.js'
 
 export const sections = [
   {
-    id: 'A',
-    title: 'A · Costes directos',
-    help: 'Personal propio, colaboradores externos y otros costes imputables al proyecto.',
+    id: "A",
+    title: "A · Costes directos",
+    help: "Personal propio, colaboradores externos y otros costes imputables al proyecto.",
     fields: [
-      { id: 'horasPropias', label: 'Horas de trabajo propias', default: 10, unit: 'h' },
-      { id: 'tarifaPropia', label: 'Tarifa hora propia (referencia)', default: 50, unit: '€/h' },
-      { id: 'colaboradores', kind: 'collaborators', full: true, default: [], label: 'Colaboradores / proveedores externos' },
-      { id: 'herramientas', label: 'Herramientas y software', default: 0, unit: '€' },
-      { id: 'materiales', label: 'Materiales / entregables', default: 0, unit: '€' },
-      { id: 'desplazamientos', label: 'Desplazamientos y dietas', default: 0, unit: '€' },
-      { id: 'informes', label: 'Informes y documentación especializada', default: 0, unit: '€' },
-      { id: 'softwareBI', label: 'Software de análisis / BI', default: 0, unit: '€' },
+      {
+        id: "horasPropias",
+        label: "Horas de trabajo propias",
+        default: 0,
+        unit: "h",
+      },
+      {
+        id: "tarifaPropia",
+        label: "Tarifa hora propia (referencia)",
+        default: 0,
+        unit: "€/h",
+      },
+      {
+        id: "colaboradores",
+        kind: "collaborators",
+        full: true,
+        default: [],
+        label: "Colaboradores / proveedores externos",
+      },
+      {
+        id: "herramientas",
+        label: "Herramientas y software",
+        default: 0,
+        unit: "€",
+      },
+      {
+        id: "materiales",
+        label: "Materiales / entregables",
+        default: 0,
+        unit: "€",
+      },
+      {
+        id: "desplazamientos",
+        label: "Desplazamientos y dietas",
+        default: 0,
+        unit: "€",
+      },
+      {
+        id: "informes",
+        label: "Informes y documentación especializada",
+        default: 0,
+        unit: "€",
+      },
+      {
+        id: "softwareBI",
+        label: "Software de análisis / BI",
+        default: 0,
+        unit: "€",
+      },
     ],
   },
   {
-    id: 'B',
-    title: 'B · Costes indirectos (imputación)',
+    id: "B",
+    title: "B · Costes indirectos (imputación)",
     help: 'La estructura mensual del negocio se configura en "Datos de tu negocio" y se prorratea según estas horas de proyecto.',
     fields: [
-      { id: 'horasProyecto', label: 'Horas totales dedicadas a este proyecto', default: 10, unit: 'h' },
+      {
+        id: "horasProyecto",
+        label: "Horas totales dedicadas a este proyecto",
+        default: 10,
+        unit: "h",
+      },
     ],
   },
   {
-    id: 'C',
-    title: 'C · Tiempo no facturable',
-    help: 'Coste de oportunidad. Se valora a la tarifa hora propia.',
+    id: "C",
+    title: "C · Tiempo no facturable",
+    help: "Coste de oportunidad. Se valora a la tarifa hora propia.",
     fields: [
-      { id: 'prep', label: 'Preparación', default: 0, unit: 'h' },
-      { id: 'reuniones', label: 'Reuniones comerciales', default: 0, unit: 'h' },
-      { id: 'admin', label: 'Administración', default: 0, unit: 'h' },
-      { id: 'seguimiento', label: 'Seguimiento post-entrega', default: 0, unit: 'h' },
-      { id: 'atencion', label: 'Atención al cliente', default: 0, unit: 'h' },
-      { id: 'procesos', label: 'Diseño y mejora de procesos', default: 0, unit: 'h' },
+      { id: "prep", label: "Preparación", default: 0, unit: "h" },
+      {
+        id: "reuniones",
+        label: "Reuniones comerciales",
+        default: 0,
+        unit: "h",
+      },
+      { id: "admin", label: "Administración", default: 0, unit: "h" },
+      {
+        id: "seguimiento",
+        label: "Seguimiento post-entrega",
+        default: 0,
+        unit: "h",
+      },
+      { id: "atencion", label: "Atención al cliente", default: 0, unit: "h" },
+      {
+        id: "procesos",
+        label: "Diseño y mejora de procesos",
+        default: 0,
+        unit: "h",
+      },
     ],
   },
   {
-    id: 'D',
-    title: 'D · Margen de beneficio',
+    id: "D",
+    title: "D · Margen de beneficio",
     fields: [
-      { id: 'margenMinimo', label: 'Margen mínimo', default: 15, unit: '%' },
-      { id: 'margenObjetivo', label: 'Margen objetivo', default: 30, unit: '%' },
-      { id: 'reserva', label: 'Reserva para reinversión', default: 5, unit: '%' },
+      { id: "margenMinimo", label: "Margen mínimo", default: 15, unit: "%" },
+      {
+        id: "margenObjetivo",
+        label: "Margen objetivo",
+        default: 30,
+        unit: "%",
+      },
+      {
+        id: "reserva",
+        label: "Reserva para reinversión",
+        default: 5,
+        unit: "%",
+      },
     ],
   },
   {
-    id: 'E',
-    title: 'E · Valor aportado al cliente',
-    help: 'Del 1 (bajo) al 5 (muy alto). Ajusta el precio según el impacto generado.',
+    id: "E",
+    title: "E · Valor aportado al cliente",
+    help: "Del 1 (bajo) al 5 (muy alto). Ajusta el precio según el impacto generado.",
     fields: [
-      { id: 'problema', label: 'Problema crítico que resuelve', default: 1, kind: 'score' },
-      { id: 'impacto', label: 'Impacto económico generado', default: 1, kind: 'score' },
-      { id: 'ahorro', label: 'Ahorro de tiempo del cliente', default: 1, kind: 'score' },
-      { id: 'riesgoRed', label: 'Reducción de riesgos', default: 1, kind: 'score' },
-      { id: 'transformacion', label: 'Transformación / resultado obtenido', default: 1, kind: 'score' },
-      { id: 'especializacion', label: 'Nivel de especialización requerido', default: 1, kind: 'score' },
+      {
+        id: "problema",
+        label: "Problema crítico que resuelve",
+        default: 1,
+        kind: "score",
+      },
+      {
+        id: "impacto",
+        label: "Impacto económico generado",
+        default: 1,
+        kind: "score",
+      },
+      {
+        id: "ahorro",
+        label: "Ahorro de tiempo del cliente",
+        default: 1,
+        kind: "score",
+      },
+      {
+        id: "riesgoRed",
+        label: "Reducción de riesgos",
+        default: 1,
+        kind: "score",
+      },
+      {
+        id: "transformacion",
+        label: "Transformación / resultado obtenido",
+        default: 1,
+        kind: "score",
+      },
+      {
+        id: "especializacion",
+        label: "Nivel de especialización requerido",
+        default: 1,
+        kind: "score",
+      },
     ],
   },
   {
-    id: 'F',
-    title: 'F · Posicionamiento de marca',
+    id: "F",
+    title: "F · Posicionamiento de marca",
     fields: [
-      { id: 'posicionamiento', label: 'Posicionamiento', default: 1, kind: 'score', min: 1, max: 3, scaleLabels: ['Accesible', 'Intermedio', 'Premium'] },
+      {
+        id: "posicionamiento",
+        label: "Posicionamiento",
+        default: 1,
+        kind: "score",
+        min: 1,
+        max: 3,
+        scaleLabels: ["Accesible", "Intermedio", "Premium"],
+      },
     ],
   },
   {
-    id: 'G',
-    title: 'G · Mercado y competencia',
-    help: 'Solo referencia: se compara con el precio recomendado, no lo modifica.',
+    id: "G",
+    title: "G · Mercado y competencia",
+    help: "Solo referencia: se compara con el precio recomendado, no lo modifica.",
     fields: [
-      { id: 'comp1', label: 'Precio referencia competidor 1', default: 0, unit: '€' },
-      { id: 'comp2', label: 'Precio referencia competidor 2', default: 0, unit: '€' },
-      { id: 'comp3', label: 'Precio referencia competidor 3', default: 0, unit: '€' },
-      { id: 'disposicion', label: 'Disposición a pagar del cliente ideal', default: 0, unit: '€' },
+      {
+        id: "comp1",
+        label: "Precio referencia competidor 1",
+        default: 0,
+        unit: "€",
+      },
+      {
+        id: "comp2",
+        label: "Precio referencia competidor 2",
+        default: 0,
+        unit: "€",
+      },
+      {
+        id: "comp3",
+        label: "Precio referencia competidor 3",
+        default: 0,
+        unit: "€",
+      },
+      {
+        id: "disposicion",
+        label: "Disposición a pagar del cliente ideal",
+        default: 0,
+        unit: "€",
+      },
     ],
   },
   {
-    id: 'H',
-    title: 'H · Riesgo y complejidad',
-    help: 'Del 1 al 5. Genera una prima de riesgo de 0% a 20%.',
+    id: "H",
+    title: "H · Riesgo y complejidad",
+    help: "Del 1 al 5. Genera una prima de riesgo de 0% a 20%.",
     fields: [
-      { id: 'personalizacion', label: 'Grado de personalización', default: 1, kind: 'score' },
-      { id: 'responsabilidad', label: 'Responsabilidad asumida', default: 1, kind: 'score' },
-      { id: 'urgencia', label: 'Urgencia', default: 1, kind: 'score' },
-      { id: 'incertidumbre', label: 'Incertidumbre del proyecto', default: 1, kind: 'score' },
+      {
+        id: "personalizacion",
+        label: "Grado de personalización",
+        default: 1,
+        kind: "score",
+      },
+      {
+        id: "responsabilidad",
+        label: "Responsabilidad asumida",
+        default: 1,
+        kind: "score",
+      },
+      { id: "urgencia", label: "Urgencia", default: 1, kind: "score" },
+      {
+        id: "incertidumbre",
+        label: "Incertidumbre del proyecto",
+        default: 1,
+        kind: "score",
+      },
     ],
   },
-]
+];
 
 // Defaults derivados de la config (para inicializar el estado del formulario).
 export function defaultValues() {
-  const out = {}
-  for (const s of sections) for (const f of s.fields) {
-    out[f.id] = Array.isArray(f.default) ? [...f.default] : f.default
-  }
-  return out
+  const out = {};
+  for (const s of sections)
+    for (const f of s.fields) {
+      out[f.id] = Array.isArray(f.default) ? [...f.default] : f.default;
+    }
+  return out;
 }
 
 // Crea un colaborador vacío.
 export function emptyCollaborator() {
-  return { nombre: '', horas: '', tarifa: '' }
+  return { nombre: "", horas: "", tarifa: "" };
 }
 
-const avg = (arr) => (arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : 0)
+const avg = (arr) =>
+  arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : 0;
 
 // =============================================================================
 // MOTOR DE CÁLCULO — réplica de las fórmulas del Excel (columna E del resumen).
 // =============================================================================
 export function compute(raw, global) {
-  const v = {}
-  for (const s of sections) for (const f of s.fields) {
-    if (f.kind === 'collaborators') continue // se procesa como array aparte
-    v[f.id] = num(raw[f.id], 0)
-  }
+  const v = {};
+  for (const s of sections)
+    for (const f of s.fields) {
+      if (f.kind === "collaborators") continue; // se procesa como array aparte
+      v[f.id] = num(raw[f.id], 0);
+    }
 
-  const ivaPct = num(global?.ivaPct, 21) / 100 // E108
+  const ivaPct = num(global?.ivaPct, 21) / 100; // E108
 
   // A · Costes directos
-  const subtotalPropio = v.horasPropias * v.tarifaPropia // E8
-  const colaboradores = Array.isArray(raw.colaboradores) ? raw.colaboradores : []
-  const subtotalColab = colaboradores.reduce((acc, c) => acc + num(c.horas, 0) * num(c.tarifa, 0), 0) // E25
-  const otrosDirectos = v.herramientas + v.materiales + v.desplazamientos + v.informes + v.softwareBI
-  const totalDirectos = subtotalPropio + subtotalColab + otrosDirectos // E32
+  const subtotalPropio = v.horasPropias * v.tarifaPropia; // E8
+  const colaboradores = Array.isArray(raw.colaboradores)
+    ? raw.colaboradores
+    : [];
+  const subtotalColab = colaboradores.reduce(
+    (acc, c) => acc + num(c.horas, 0) * num(c.tarifa, 0),
+    0,
+  ); // E25
+  const otrosDirectos =
+    v.herramientas +
+    v.materiales +
+    v.desplazamientos +
+    v.informes +
+    v.softwareBI;
+  const totalDirectos = subtotalPropio + subtotalColab + otrosDirectos; // E32
 
   // B · Costes indirectos prorrateados.
   // La estructura mensual vive en los datos del negocio (global); las horas de
   // proyecto siguen siendo específicas de cada cálculo.
-  const g = (id) => num(global?.[id], 0)
+  const g = (id) => num(global?.[id], 0);
   const indirectosSinNominas =
-    g('alquiler') + g('seguros') + g('autonomos') + g('contabilidad') + g('marketing') + g('formacion') + g('herramientasGestion') // E43
-  const indirectosConNominas = indirectosSinNominas + g('nominas') // E44
-  const horasFacturablesTotales = g('horasFacturablesTotales')
+    g("alquiler") +
+    g("seguros") +
+    g("autonomos") +
+    g("contabilidad") +
+    g("marketing") +
+    g("formacion") +
+    g("herramientasGestion"); // E43
+  const indirectosConNominas = indirectosSinNominas + g("nominas"); // E44
+  const horasFacturablesTotales = g("horasFacturablesTotales");
   const indirectosImputados =
-    horasFacturablesTotales === 0 ? 0 : (indirectosConNominas / horasFacturablesTotales) * v.horasProyecto // E47
+    horasFacturablesTotales === 0
+      ? 0
+      : (indirectosConNominas / horasFacturablesTotales) * v.horasProyecto; // E47
 
   // C · Tiempo no facturable
-  const horasNoFacturables = v.prep + v.reuniones + v.admin + v.seguimiento + v.atencion + v.procesos // E56
-  const costeNoFacturable = horasNoFacturables * v.tarifaPropia // E57
+  const horasNoFacturables =
+    v.prep + v.reuniones + v.admin + v.seguimiento + v.atencion + v.procesos; // E56
+  const costeNoFacturable = horasNoFacturables * v.tarifaPropia; // E57
 
-  const costeBase = totalDirectos + indirectosImputados + costeNoFacturable // E59
+  const costeBase = totalDirectos + indirectosImputados + costeNoFacturable; // E59
 
   // D · Margen
-  const margenMinimo = v.margenMinimo / 100
-  const margenObjetivo = v.margenObjetivo / 100
-  const reserva = v.reserva / 100
-  const margenTotal = margenObjetivo + reserva // E65
-  const precioConMargen = 1 - margenTotal === 0 ? 0 : costeBase / (1 - margenTotal) // E66
+  const margenMinimo = v.margenMinimo / 100;
+  const margenObjetivo = v.margenObjetivo / 100;
+  const reserva = v.reserva / 100;
+  const margenTotal = margenObjetivo + reserva; // E65
+  const precioConMargen =
+    1 - margenTotal === 0 ? 0 : costeBase / (1 - margenTotal); // E66
 
   // E · Factor de valor (1.00 – 1.50)
-  const mediaValor = avg([v.problema, v.impacto, v.ahorro, v.riesgoRed, v.transformacion, v.especializacion]) // E76
-  const factorValor = 1 + ((mediaValor - 1) * 0.5) / 4 // E77
+  const mediaValor = avg([
+    v.problema,
+    v.impacto,
+    v.ahorro,
+    v.riesgoRed,
+    v.transformacion,
+    v.especializacion,
+  ]); // E76
+  const factorValor = 1 + ((mediaValor - 1) * 0.5) / 4; // E77
 
   // F · Factor de posicionamiento (0.85 – 1.20)
-  const factorPosicion = 0.85 + (v.posicionamiento - 1) * 0.175 // E81
+  const factorPosicion = 0.85 + (v.posicionamiento - 1) * 0.175; // E81
 
   // G · Mercado (referencia)
-  const compis = [v.comp1, v.comp2, v.comp3].filter((x) => x > 0)
-  const mediaMercado = compis.length ? avg(compis) : 0 // E88
+  const compis = [v.comp1, v.comp2, v.comp3].filter((x) => x > 0);
+  const mediaMercado = compis.length ? avg(compis) : 0; // E88
 
   // H · Prima de riesgo (0% – 20%)
-  const mediaRiesgo = avg([v.personalizacion, v.responsabilidad, v.urgencia, v.incertidumbre]) // E95
-  const primaRiesgoPct = (mediaRiesgo - 1) * 0.05 // E96
+  const mediaRiesgo = avg([
+    v.personalizacion,
+    v.responsabilidad,
+    v.urgencia,
+    v.incertidumbre,
+  ]); // E95
+  const primaRiesgoPct = (mediaRiesgo - 1) * 0.05; // E96
 
   // Resumen de cálculo
-  const paso1 = precioConMargen // E103
-  const paso2 = paso1 * factorValor // E104
-  const paso3 = paso2 * factorPosicion // E105
-  const primaRiesgoEur = paso3 * primaRiesgoPct // E106
-  const precioRecomendado = paso3 + primaRiesgoEur // E107 (sin IVA)
-  const ivaEur = precioRecomendado * ivaPct // E109
-  const precioFinal = precioRecomendado + ivaEur // E110 (con IVA)
-  const denomMin = 1 - margenMinimo - reserva
-  const precioMinimo = denomMin === 0 ? 0 : (costeBase / denomMin) * (1 + ivaPct) // E113
+  const paso1 = precioConMargen; // E103
+  const paso2 = paso1 * factorValor; // E104
+  const paso3 = paso2 * factorPosicion; // E105
+  const primaRiesgoEur = paso3 * primaRiesgoPct; // E106
+  const precioRecomendado = paso3 + primaRiesgoEur; // E107 (sin IVA)
+  const ivaEur = precioRecomendado * ivaPct; // E109
+  const precioFinal = precioRecomendado + ivaEur; // E110 (con IVA)
+  const denomMin = 1 - margenMinimo - reserva;
+  const precioMinimo =
+    denomMin === 0 ? 0 : (costeBase / denomMin) * (1 + ivaPct); // E113
 
   // Análisis de rentabilidad
-  const rentabilidadBruta = precioFinal === 0 ? 0 : (precioFinal - costeBase * (1 + ivaPct)) / precioFinal // E116
-  const beneficioNeto = precioRecomendado - costeBase // E117
-  const difVsMinimo = precioFinal - precioMinimo // E118
-  const difVsMercado = mediaMercado === 0 ? 0 : precioFinal - mediaMercado // E119
+  const rentabilidadBruta =
+    precioFinal === 0
+      ? 0
+      : (precioFinal - costeBase * (1 + ivaPct)) / precioFinal; // E116
+  const beneficioNeto = precioRecomendado - costeBase; // E117
+  const difVsMinimo = precioFinal - precioMinimo; // E118
+  const difVsMercado = mediaMercado === 0 ? 0 : precioFinal - mediaMercado; // E119
 
   return {
     // bloques de coste
@@ -202,11 +385,15 @@ export function compute(raw, global) {
     mediaMercado,
     // resumen (pasos)
     steps: [
-      { label: '① Precio base (coste + margen)', value: paso1 },
-      { label: '② Ajuste por valor aportado', value: paso2 },
-      { label: '③ Ajuste por posicionamiento', value: paso3 },
-      { label: '④ Prima de riesgo', value: primaRiesgoEur },
-      { label: '⑤ Precio recomendado (sin IVA)', value: precioRecomendado, emphasis: true },
+      { label: "① Precio base (coste + margen)", value: paso1 },
+      { label: "② Ajuste por valor aportado", value: paso2 },
+      { label: "③ Ajuste por posicionamiento", value: paso3 },
+      { label: "④ Prima de riesgo", value: primaRiesgoEur },
+      {
+        label: "⑤ Precio recomendado (sin IVA)",
+        value: precioRecomendado,
+        emphasis: true,
+      },
       { label: `⑥ IVA (${num(global?.ivaPct, 21)}%)`, value: ivaEur },
     ],
     precioRecomendado,
@@ -218,16 +405,17 @@ export function compute(raw, global) {
     beneficioNeto,
     difVsMinimo,
     difVsMercado,
-  }
+  };
 }
 
 export default {
-  id: 'consultoria',
-  label: 'Consultoría',
-  icon: '🤝',
-  tagline: 'Proyectos de consultoría estratégica y asesoramiento.',
-  formula: 'Precio = (Coste Base ÷ (1−Margen)) × Factor Valor × Factor Posicionamiento + Prima Riesgo + IVA',
+  id: "consultoria",
+  label: "Consultoría",
+  icon: "🤝",
+  tagline: "Proyectos de consultoría estratégica y asesoramiento.",
+  formula:
+    "Precio = (Coste Base ÷ (1−Margen)) × Factor Valor × Factor Posicionamiento + Prima Riesgo + IVA",
   sections,
   defaultValues,
   compute,
-}
+};
