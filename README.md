@@ -12,6 +12,7 @@ El fichero [`docs/Calculadora_Precios servicios-productos.xlsx`](docs/Calculador
 2. Muestra un **formulario interactivo** con todos los campos opcionales.
 3. Un **panel de resultado fijo** recalcula el precio en vivo a medida que se rellenan los datos.
 4. Un botón **"Descargar informe en PDF"** genera un informe completo del cálculo (datos del negocio, precio final, desglose, costes y análisis de rentabilidad).
+5. Los valores introducidos se **guardan en `localStorage`** (por calculadora) y se recuperan automáticamente la próxima vez que se abre.
 
 Fórmula de servicios: `Precio = (Coste Base ÷ (1−Margen)) × Factor Valor × Factor Posicionamiento + Prima Riesgo + IVA`.
 
@@ -35,6 +36,10 @@ Diseño *config-driven*. Cada calculadora vive en `src/calculators/<id>.js` y ex
 Para añadir una calculadora nueva: crear su módulo siguiendo `consultoria.js`, registrarlo en `src/calculators/index.js` y marcar `available: true` en `CALCULATOR_TYPES`.
 
 La configuración global (IVA, moneda) está en `src/config/global.js` (pestaña 🏠 Portada del Excel).
+
+### Persistencia
+
+`src/lib/storage.js` ofrece `loadJSON`/`saveJSON` (tolerantes a fallos). En `App.jsx` se persisten los datos del negocio (`calc.business`) y los valores de cada calculadora (`calc.values.<id>`); al abrir una calculadora se fusionan los valores guardados con los defaults. "Restablecer valores" sobrescribe lo guardado con los valores por defecto.
 
 ### Exportación a PDF
 
