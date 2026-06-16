@@ -11,16 +11,16 @@ export default function Section({ section, values, onChange, currency }) {
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="flex w-full items-center justify-between px-5 py-3 text-left"
+        className="flex w-full items-center justify-between px-4 py-2.5 text-left"
       >
-        <span className="font-semibold text-marino">{section.title}</span>
+        <span className="text-sm font-semibold text-marino">{section.title}</span>
         <span className="text-gris-medio">{open ? '−' : '+'}</span>
       </button>
 
       {open && (
-        <div className="border-t border-gris-claro/60 px-5 pb-4">
-          {section.help ? <p className="pt-3 text-xs text-gris-medio">{section.help}</p> : null}
-          <div className="grid grid-cols-1 gap-x-6 sm:grid-cols-2">
+        <div className="border-t border-gris-claro/60 px-4 pb-3">
+          {section.help ? <p className="pt-2 text-xs text-gris-medio">{section.help}</p> : null}
+          <div className="grid grid-cols-1 gap-x-5 sm:grid-cols-2">
             {section.fields.map((f) => (
               <div key={f.id} className={f.full ? 'sm:col-span-2' : 'h-full'}>
                 {f.kind === 'collaborators' ? (
